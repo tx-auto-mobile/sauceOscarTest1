@@ -1,0 +1,13 @@
+[caps]
+
+   platformName =     'iOS'
+   platformVersion =  '9.3'
+   deviceName =       'iPhone 5'
+   app =              '/Users/applico-dev/Library/Developer/Xcode/DerivedData/Edhita-hbliqzzfhdchfaavsoqzmuydbamn/Build/Products/Debug-iphonesimulator/Edhita.app'
+   noReset =          true
+
+
+[appium_lib]
+   wait = 30
+   sauce_username = false
+   sauce_access_key = false
