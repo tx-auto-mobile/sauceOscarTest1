@@ -2,7 +2,7 @@
 
    platformName =     'iOS'
    platformVersion =  '9.3'
-   deviceName =       'iPhone 5'
+   deviceName =       'iPhone 5s'
    app =              '/Users/applico-dev/Library/Developer/Xcode/DerivedData/Edhita-hbliqzzfhdchfaavsoqzmuydbamn/Build/Products/Debug-iphonesimulator/Edhita.app'
    noReset =          true
 

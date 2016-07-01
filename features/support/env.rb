@@ -12,7 +12,7 @@ require_relative '../../page_objects/settings'
 require_relative '../../page_objects/editor_page'
 
 desired_caps_local = Appium.load_appium_txt file: File.expand_path('./', __FILE__), verbose: true
-saucelabs = false
+saucelabs = true
 
 class AppiumWorld
 
@@ -28,7 +28,7 @@ end
 # Load the desired configuration from appium_sauce.txt, create a driver then
 # Add the methods to the world
 
-desired_caps = {
+desired_caps_sauce = {
     caps: {
         platformVersion: "#{ENV['platformVersion']}",
         deviceName: "#{ENV['deviceName']}",
@@ -37,10 +37,19 @@ desired_caps = {
         deviceOrientation: 'portrait',
         appiumVersion: '1.5.3',
         browserName: ''
+    },
+    appium_lib: {
+        wait: 30
     }
 }
 
-Appium::Driver.new(desired_caps_local)
+if saucelabs
+  caps = desired_caps_sauce
+else
+  caps = desired_caps_local
+end
+
+Appium::Driver.new(caps)
 Appium.promote_appium_methods AppiumWorld
 
 World(Test::Unit::Assertions)
@@ -51,11 +60,14 @@ end
 
 Before do
   $driver.start_driver
+
+  ## Needed to declare driver explicitly
+  #$driver.manage.timeouts.implicit_wait = 60
 end
 
 After do |scenario|
 
-  if saucelabs == true
+  if saucelabs
     $driver.driver_quit
     sessionid =  $driver.session_id
     if scenario.passed?
@@ -63,5 +75,7 @@ After do |scenario|
     else
       SauceWhisk::Jobs.fail_job sessionid
     end
+  else
+    $driver.driver_quit
   end
 end
